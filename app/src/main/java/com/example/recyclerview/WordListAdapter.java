@@ -3,10 +3,12 @@ package com.example.recyclerview;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 
@@ -38,7 +40,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
         return mWordList.size();
     }
 
-    class WordViewHolder extends RecyclerView.ViewHolder
+    class WordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         public final TextView wordItemView;
         final WordListAdapter mAdapter;
@@ -47,6 +49,20 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
             super(itemView);
             wordItemView = itemView.findViewById(R.id.word);
             this.mAdapter = adapter;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int mPosition = getLayoutPosition();
+
+            String element = mWordList.get(mPosition);
+
+            mWordList.set(mPosition, "Clicked! " + element);
+
+            Log.d("TESTACTIVITY", "Pulsado " + mPosition);
+
+            mAdapter.notifyDataSetChanged();
         }
     }
 }
